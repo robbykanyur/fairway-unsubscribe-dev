@@ -22,7 +22,7 @@ def unsubscribe_user(email):
     contact_records = sf.query(contact_query)
 
     if contact_records["totalSize"] == 0:
-        response = {"status_code": 500, "text": "Record not found"}
+        response = {"status_code": 500}
         return(response)
     else:
         previously = False
@@ -30,5 +30,5 @@ def unsubscribe_user(email):
             if(contact['HasOptedOutOfEmail'] == True):
                 previously = True
             sf.Contact.update(contact["Id"],{'HasOptedOutOfEmail':'true'})
-        response = {"status_code": 200, "text": "Success", "previously": previously}
+        response = {"status_code": 200, "previously": previously}
     return(response)

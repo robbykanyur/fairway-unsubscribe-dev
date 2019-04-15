@@ -1,9 +1,10 @@
 import sys
 from app import app, db
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, jsonify
 from app.forms import UnsubscribeForm, LoginForm
 from app.models import Unsubscribe, User
 from app.salesforce import unsubscribe_user
+from app.trumpeter import send_trumpet
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.urls import url_parse
 import json
@@ -28,7 +29,17 @@ def unsubscribe():
                                   previously=previously)
         db.session.add(unsubscribe)
         db.session.commit()
-        return redirect(url_for('index'))
+
+        data = {'email': form.email.data, 'previously': previously}
+        if sf_response['status_code'] == 200:
+            return jsonify(data), 200
+        else:
+            return jsonify(data), 500
+
+@app.route('/trumpeter', methods=['POST'])
+def trumpeter():
+    send_trumpet(request.json)
+    return redirect(url_for('index'))
 
 @app.route('/admin')
 @login_required

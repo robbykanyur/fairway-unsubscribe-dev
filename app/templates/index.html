@@ -25,9 +25,16 @@ No email address provided.
         data: $('form').serialize(),
         success: function(data) {
           $('#page-text').text('Success!');
+          var email = data['email'];
+          var previously = data['previously'];
+          if(previously === true) {
+            trumpet('[WARNING] Multiple unsubscribes for ' + email + '.');
+          }
         },
         error: function(data) {
+          email = data.responseJSON['email'];
           $('#page-text').text('Error!');
+          trumpet('[500] Unsubscribe attempt failed for ' + email + '.');
         }
       });
       e.preventDefault();
@@ -41,6 +48,18 @@ No email address provided.
       }
     })
   });
+
+  function trumpet(source_text) {
+    var url = "{{ url_for('trumpeter') }}";
+    var text = JSON.stringify(source_text);
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: text,
+      contentType: "application/json",
+      dataType: 'json'
+    });
+  };
 </script>
 
 {% endblock %}

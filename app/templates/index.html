@@ -1,3 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 are you sure you want to unsubscribe {{ email }}?
 <br><br>
 <a href="#">yes</a>
+<br><br>
+<hr>
+<form action="{{ url_for('unsubscribe') }}" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  are you sure?
+  <p>{{ form.submit() }}</p>
+</form>
+
+{% endblock %}

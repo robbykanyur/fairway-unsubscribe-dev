@@ -1,0 +1,23 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Fairway321</title>
+    {% else %}
+    <title>Fairway 321</title>
+    {% endif %}
+    <script src="/static/js/moment.min.js"></script>
+  </head>
+  <body>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+  </body>
+</html>

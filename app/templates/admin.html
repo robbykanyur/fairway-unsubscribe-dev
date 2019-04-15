@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>admin screen</h1>
+
+<a href="{{ url_for('logout') }}">logout</a>
+
+<table>
+{% for record in unsubscribes %}
+<tr>
+  <td width="200px">{{ record.email }}</td>
+  <td width="200px">{{ record.address }}</td>
+  <td width="200px">{{ momentjs(record.timestamp).format('LLL') }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

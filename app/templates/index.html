@@ -2,6 +2,13 @@
 
 {% block content %}
 
+<div id="overlay" class="overlay">
+  <div class="bg"></div>
+  <div class="loader">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </div>
+</div>
+
 <div class="container page-content" id="index">
   <div class="row">
     <div class="twelve columns" id="full-content">
@@ -40,12 +47,14 @@
       }
     });
     $('form').submit(function(e) {
+      $('#overlay').css({'opacity': 1});
       var url = "{{ url_for('unsubscribe') }}";
       $.ajax({
         type: "POST",
         url: url,
         data: $('form').serialize(),
         success: function(data) {
+          $('#overlay').css({'opacity': 0});
           $('#full-content').html('<h1>Success</h1><p>You have been successfully unsubscribed.</p>');
           var email = data['email'];
           var previously = data['previously'];
@@ -54,6 +63,7 @@
           }
         },
         error: function(data) {
+          $('#overlay').css({'opacity': 0});
           if(data.responseJSON) {
             email = data.responseJSON['email'];
             trumpet('[500] Unsubscribe attempt failed for ' + email + '.');

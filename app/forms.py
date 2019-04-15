@@ -4,7 +4,7 @@ from wtforms.validators import ValidationError, DataRequired, Email
 from app.models import Unsubscribe
 
 class UnsubscribeForm(FlaskForm):
-    email = HiddenField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     address = HiddenField('Address', validators=[DataRequired()])
     submit = SubmitField('Yes, Unsubscribe Me')
 

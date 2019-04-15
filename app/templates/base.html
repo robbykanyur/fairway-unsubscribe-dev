@@ -37,7 +37,15 @@
   {% endif %}
   {% endwith %}
 
+  <div class="icon u-block-center">
+    <img src="{{ url_for('static', filename='img/icon-white.png') }}" width="100%" />
+  </div>
+
   {% block content %}{% endblock %}
+
+  <div class="logo-bottom u-block-center">
+    <img src="{{ url_for('static', filename='img/fairway-black.png') }}" width="100%" />
+  </div>
 
   <script>
     $(document).ready(function(){

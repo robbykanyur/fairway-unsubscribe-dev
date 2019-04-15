@@ -7,8 +7,8 @@ body {
 
 .page-content {
   background: #ffffff;
-  margin: 60px auto;
-  padding: 60px;
+  margin: 40px auto;
+  padding: 40px 60px;
   border-radius: 10px;
 }
 
@@ -24,6 +24,26 @@ body {
   padding: 16px 0;
   opacity: 0;
   transition: opacity 0.2s;
+}
+
+.icon {
+  margin-top: 40px;
+  width: 60px;
+}
+
+.logo-bottom {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width: 140px;
+  opacity: 0.2;
+}
+
+input.hidden {
+  display: none;
+}
+
+p.margin-slim {
+  margin-bottom: 14px;
 }
 
 /* PAGE-SPECIFIC

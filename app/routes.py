@@ -27,7 +27,7 @@ def unsubscribe():
         previously = False
         if ('previously' in sf_response.keys()):
             previously = sf_response['previously']
-        unsubscribe = Unsubscribe(email=form.email.data, address=form.address.data, 
+        unsubscribe = Unsubscribe(email=form.email.data, address=form.address.data,
                                   sf_response=sf_response['status_code'],
                                   previously=previously)
         db.session.add(unsubscribe)

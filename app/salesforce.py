@@ -18,14 +18,17 @@ def unsubscribe_user(email):
     instance_url = app.config['SF_INSTANCE_URL']
 
     sf = Salesforce(instance=instance_url, session_id=access_token)
-    contact_query = "SELECT Id FROM Contact WHERE email = '" + email + "'"
+    contact_query = "SELECT Id, HasOptedOutOfEmail FROM Contact WHERE email = '" + email + "'"
     contact_records = sf.query(contact_query)
 
     if contact_records["totalSize"] == 0:
         response = {"status_code": 500, "text": "Record not found"}
+        return(response)
     else:
+        previously = False
         for contact in contact_records["records"]:
-            contact_id = contact["Id"]
-            sf.Contact.update(contact_id,{'HasOptedOutOfEmail':'true'})
-        response = {"status_code": 200, "text": "Success"}
-    return jsonify(response)
+            if(contact['HasOptedOutOfEmail'] == True):
+                previously = True
+            sf.Contact.update(contact["Id"],{'HasOptedOutOfEmail':'true'})
+        response = {"status_code": 200, "text": "Success", "previously": previously}
+    return(response)

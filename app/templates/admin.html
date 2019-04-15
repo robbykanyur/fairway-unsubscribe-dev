@@ -4,21 +4,24 @@
 
 <h1>admin screen</h1>
 
-<a href="{{ url_for('logout') }}">logout</a>
+<a href="{{ url_for('logout') }}">>> logout</a><br><br>
 
+<hr>
 <table>
-  <th>
-    <td>email</td>
-    <td>IP addr</td>
-    <td>timestamp</td>
-    <td>sf response</td>
-  </th>
+  <tr>
+    <th>email</td>
+    <th>address</td>
+    <th>timestamp</td>
+    <th>sf_response</td>
+    <th>previously</td>
+  </tr>
   {% for record in unsubscribes %}
   <tr>
     <td width="200px">{{ record.email }}</td>
     <td width="200px">{{ record.address }}</td>
     <td width="200px">{{ momentjs(record.timestamp).format('LLL') }}</td>
     <td width="200px">{{ record.sf_response }}</td>
+    <td width="200px">{{ record.previously }}</td>
   </tr>
   {% endfor %}
 </table>

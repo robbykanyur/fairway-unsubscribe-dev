@@ -8,6 +8,7 @@ class Unsubscribe(db.Model):
     email = db.Column(db.String(254), index=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     address = db.Column(db.String(32), index=True)
+    sf_response = db.Column(db.String(32), index=True)
 
     def __repr__(self):
         return '<Email {}>'.format(self.email)

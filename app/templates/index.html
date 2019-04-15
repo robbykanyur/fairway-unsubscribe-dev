@@ -2,15 +2,18 @@
 
 {% block content %}
 
-are you sure you want to unsubscribe {{ email }}?
-<br><br>
-<a href="#">yes</a>
-<br><br>
-<hr>
+{% if email %}
+
 <form action="{{ url_for('unsubscribe') }}" method="post" novalidate>
   {{ form.hidden_tag() }}
-  are you sure?
+  Are you sure you would like to unsubscribe {{ email }}?
   <p>{{ form.submit() }}</p>
 </form>
+
+{% else %}
+
+No email address provided.
+
+{% endif %}
 
 {% endblock %}

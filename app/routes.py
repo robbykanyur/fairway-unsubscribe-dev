@@ -2,6 +2,7 @@ from app import app, db
 from flask import render_template, redirect, url_for, request, flash
 from app.forms import UnsubscribeForm, LoginForm
 from app.models import Unsubscribe, User
+from app.salesforce import unsubscribe_user
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.urls import url_parse
 
@@ -16,10 +17,15 @@ def index():
 def unsubscribe():
     form = UnsubscribeForm()
     if form.validate_on_submit():
+        sf_response = unsubscribe_user(form.email.data)
         unsubscribe = Unsubscribe(email=form.email.data, address=form.address.data)
         db.session.add(unsubscribe)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('result'))
+
+@app.route('/result')
+def result():
+    return render_template('result.html', title="Result")
 
 @app.route('/admin')
 @login_required

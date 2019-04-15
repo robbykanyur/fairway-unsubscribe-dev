@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from config import Config
 from .momentjs import momentjs
 from flask_login import LoginManager
+from flask_webpack import Webpack 
 
 app = Flask(__name__)
 app.config.from_object(Config)

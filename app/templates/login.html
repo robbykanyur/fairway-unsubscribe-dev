@@ -2,25 +2,34 @@
 
 {% block content %}
 
-<h1>Sign In</h1>
-<form action="" method="post" novalidate>
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.username.label }}<br>
-    {{ form.username(size=32) }}<br>
-    {% for error in form.username.errors %}
-    <span class="form-error">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.password.label }}<br>
-    {{ form.password(size=32) }}<br>
-    {% for error in form.password.errors %}
-    <span class="form-error">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-  <p>{{ form.submit() }}</p>
-</form>
+<div class="container page-content" id="login">
+  <h1>Sign In</h1>
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="row">
+      <div class="twelve columns">
+        {{ form.username.label }}
+        {{ form.username(class_="u-half-width u-text-center") }}
+        {% for error in form.username.errors %}
+        <span class="form-error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve-columns">
+        {{ form.password.label }}
+        {{ form.password(class_="u-half-width u-text-center") }}
+        {% for error in form.password.errors %}
+        <span class="form-error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+    </div>
+    <label class="remember_me">
+      {{ form.remember_me() }}
+      <span class="label-body">Remember me</span>
+    </label>
+    {{ form.submit(class_="button-primary") }}</p>
+  </form>
+</div>
 
 {% endblock %}

@@ -1,10 +1,27 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+
     {% if title %}
     <title>{{ title }} - Fairway321</title>
     {% else %}
     <title>Fairway 321</title>
     {% endif %}
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/moment.min.js"></script>
   </head>
@@ -12,13 +29,23 @@
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
+    <div id="flash">
     {% for message in messages %}
       {{ message }}
     {% endfor %}
+    </div>
   {% endif %}
   {% endwith %}
 
   {% block content %}{% endblock %}
+
+  <script>
+    $(document).ready(function(){
+      if($('#flash').length) {
+        $('#flash').css({opacity: 1});
+      };
+    });
+  </script>
 
   </body>
 </html>

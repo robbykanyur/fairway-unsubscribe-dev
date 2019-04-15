@@ -6,7 +6,7 @@ from app.models import Unsubscribe
 class UnsubscribeForm(FlaskForm):
     email = HiddenField('Email', validators=[DataRequired(), Email()])
     address = HiddenField('Address', validators=[DataRequired()])
-    submit = SubmitField('Unsubscribe')
+    submit = SubmitField('Yes, Unsubscribe Me')
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

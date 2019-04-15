@@ -2,18 +2,27 @@
 
 {% block content %}
 
-{% if email %}
-<span id="page-text">Are you sure you would like to unsubscribe {{ email }}?</span>
-<form action="{{ url_for('unsubscribe') }}" method="post" novalidate>
-  {{ form.hidden_tag() }}
-  <p>{{ form.submit() }}</p>
-</form>
+<div class="container page-content" id="index">
+  <div class="row">
+    <div class="twelve columns" id="full-content">
+      <h1>Unsubscribe</h1>
+      {% if email %}
+      <p><span id="page-text">
+        Are you sure you would like to unsubscribe <strong>{{ email }}</strong> from all Fairway Area 321 emails?
+      </span></p>
+      <form action="{{ url_for('unsubscribe') }}" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>{{ form.submit(class_="button-primary") }}</p>
+      </form>
 
-{% else %}
+      {% else %}
 
-No email address provided.
+      <p>No email address was provided.</p>
 
-{% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
 
 <script>
   $(document).ready(function(){
@@ -24,7 +33,7 @@ No email address provided.
         url: url,
         data: $('form').serialize(),
         success: function(data) {
-          $('#page-text').text('Success!');
+          $('#full-content').html('<h1>Success</h1><p>You have been successfully unsubscribed.</p>');
           var email = data['email'];
           var previously = data['previously'];
           if(previously === true) {

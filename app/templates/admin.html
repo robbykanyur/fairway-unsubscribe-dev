@@ -2,28 +2,52 @@
 
 {% block content %}
 
-<h1>admin screen</h1>
-
-<a href="{{ url_for('logout') }}">>> logout</a><br><br>
-
-<hr>
-<table>
-  <tr>
-    <th>email</td>
-    <th>address</td>
-    <th>timestamp</td>
-    <th>sf_response</td>
-    <th>previously</td>
-  </tr>
-  {% for record in unsubscribes %}
-  <tr>
-    <td width="200px">{{ record.email }}</td>
-    <td width="200px">{{ record.address }}</td>
-    <td width="200px">{{ momentjs(record.timestamp).format('LLL') }}</td>
-    <td width="200px">{{ record.sf_response }}</td>
-    <td width="200px">{{ record.previously }}</td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="container page-content" id="admin">
+  <div class="row">
+    <div class="u-text-center">
+      <h1>Unsubscribes</h1>
+      <a class="button" href="{{ url_for('logout') }}">Logout</a>&nbsp;
+      <a class="button" href="{{ url_for('admin_csv') }}">CSV</a><br><br>
+    </div>
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>email</td>
+          <th>address</td>
+          <th>timestamp</td>
+          <th>sf_response</td>
+          <th>previously</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in unsubscribes %}
+        <tr>
+          <td>{{ record.email }}</td>
+          <td>{{ record.address }}</td>
+          <td>{{ momentjs(record.timestamp).format('LLL') }}</td>
+          <td>{{ record.sf_response }}</td>
+          <td>{{ record.previously }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row links">
+      <div class="four columns">
+        {% if prev_url %}
+        <a class="button" href="{{prev_url }}">Newer Entries</a>
+        {% endif %}
+        &nbsp;
+      </div>
+      <div class="four columns u-text-center page-location">
+        <strong>Page {{ page }} of {{ total_pages }}</strong>
+      </div>
+      <div class="four columns">
+        {% if next_url %}
+        <a class="button u-pull-right" href="{{next_url }}">Older Entries</a>
+        {% endif %}
+        &nbsp;
+      </div>
+  </div>
+</div>
 
 {% endblock %}

@@ -1,6 +1,7 @@
 import sys
+import os
 from app import app, db
-from flask import render_template, redirect, url_for, request, flash, jsonify
+from flask import render_template, redirect, url_for, request, flash, jsonify, send_file, Response
 from app.forms import UnsubscribeForm, LoginForm
 from app.models import Unsubscribe, User
 from app.salesforce import unsubscribe_user
@@ -8,13 +9,15 @@ from app.trumpeter import send_trumpet
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.urls import url_parse
 import json
+import csv
+from requests import Response
 
 @app.route('/')
 def index():
     address = request.remote_addr
     email = request.args.get('email')
     form = UnsubscribeForm(email=email, address=address)
-    return render_template('index.html', email=email, form=form, address=address)
+    return render_template('index.html', email=email, form=form, address=address, title="Unsubscribe")
 
 @app.route('/unsubscribe', methods=['POST'])
 def unsubscribe():
@@ -44,8 +47,26 @@ def trumpeter():
 @app.route('/admin')
 @login_required
 def admin():
-    unsubscribes = Unsubscribe.query.all()
-    return render_template('admin.html', unsubscribes=unsubscribes, title="Authenticate")
+    page = request.args.get('page', 1, type=int)
+    unsubscribes = db.session.query(Unsubscribe).order_by(Unsubscribe.timestamp.desc()).paginate(page, 10, False)
+    next_url = url_for('admin', page=unsubscribes.next_num) if unsubscribes.has_next else None
+    prev_url = url_for('admin', page=unsubscribes.prev_num) if unsubscribes.has_prev else None
+    return render_template('admin.html', unsubscribes=unsubscribes.items, title="Admin", prev_url=prev_url,
+                           next_url=next_url, page=page, total_pages=unsubscribes.pages)
+
+@app.route('/admin/csv')
+@login_required
+def admin_csv():
+    csv_path = os.path.join(app.instance_path, 'unsubscribe.csv')
+    if not os.path.exists(app.instance_path):
+        os.makedirs(app.instance_path)
+    records = db.session.query(Unsubscribe).all()
+    f = open(csv_path, 'w')
+    out = csv.writer(f)
+    [out.writerow([column.name for column in Unsubscribe.__mapper__.columns])]
+    [out.writerow([getattr(curr, column.name) for column in Unsubscribe.__mapper__.columns]) for curr in records]
+    f.close()
+    return send_file(csv_path, mimetype="text/csv", as_attachment=True, attachment_filename='unsubscribe.csv')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -60,7 +81,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('admin')
         return redirect(next_page)
     return render_template('login.html', title='Authenticate', form=form)
 

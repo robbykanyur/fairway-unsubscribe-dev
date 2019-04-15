@@ -3,10 +3,9 @@
 {% block content %}
 
 {% if email %}
-
+<span id="page-text">Are you sure you would like to unsubscribe {{ email }}?</span>
 <form action="{{ url_for('unsubscribe') }}" method="post" novalidate>
   {{ form.hidden_tag() }}
-  Are you sure you would like to unsubscribe {{ email }}?
   <p>{{ form.submit() }}</p>
 </form>
 
@@ -15,5 +14,33 @@
 No email address provided.
 
 {% endif %}
+
+<script>
+  $(document).ready(function(){
+    $('form').submit(function(e) {
+      var url = "{{ url_for('unsubscribe') }}";
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: $('form').serialize(),
+        success: function(data) {
+          $('#page-text').text('Success!');
+        },
+        error: function(data) {
+          $('#page-text').text('Error!');
+        }
+      });
+      e.preventDefault();
+    });
+
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", "{{ form.csrf_token._value() }}")
+        }
+      }
+    })
+  });
+</script>
 
 {% endblock %}

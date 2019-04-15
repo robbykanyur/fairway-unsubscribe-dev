@@ -33,6 +33,12 @@
 
 <script>
   $(document).ready(function(){
+    $('.input').keypress(function(e) {
+      if(e.which == 13) {
+        $('form').submit();
+        return false;
+      }
+    });
     $('form').submit(function(e) {
       var url = "{{ url_for('unsubscribe') }}";
       $.ajax({
@@ -48,9 +54,11 @@
           }
         },
         error: function(data) {
-          email = data.responseJSON['email'];
-          $('#page-text').text('There was an error processing your request. Please try again at a later time.');
-          trumpet('[500] Unsubscribe attempt failed for ' + email + '.');
+          if(data.responseJSON) {
+            email = data.responseJSON['email'];
+            trumpet('[500] Unsubscribe attempt failed for ' + email + '.');
+          };
+          $('#full-content').html('<h1>Error</h1><p>There was an error processing your request. Please try again at a later time.</p><p class="margin-none"><a class="button button-primary" href="{{ url_for('index') }}">Try Again</a></p>');
         }
       });
       e.preventDefault();

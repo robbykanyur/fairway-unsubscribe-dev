@@ -46,6 +46,10 @@ p.margin-slim {
   margin-bottom: 14px;
 }
 
+p.margin-none {
+  margin-bottom: 0;
+}
+
 /* PAGE-SPECIFIC
  * ---------------------------------------------------------------------------*/
 

@@ -38,6 +38,8 @@ def unsubscribe():
             return jsonify(data), 200
         else:
             return jsonify(data), 500
+    else:
+        return '', 500
 
 @app.route('/trumpeter', methods=['POST'])
 def trumpeter():

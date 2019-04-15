@@ -3,7 +3,7 @@ from flask import jsonify
 import requests
 from simple_salesforce import Salesforce
 
-def unsubscribe_user(email):
+def authenticate():
     params = {
         "grant_type": "password",
         "client_id": app.config['CONSUMER_KEY'],
@@ -17,7 +17,12 @@ def unsubscribe_user(email):
     access_token = r.json().get("access_token")
     instance_url = app.config['SF_INSTANCE_URL']
 
-    sf = Salesforce(instance=instance_url, session_id=access_token)
+    return ({"access_token": access_token, "instance_url": instance_url})
+
+def unsubscribe_user(email):
+    auth = authenticate()
+
+    sf = Salesforce(instance=auth['instance_url'], session_id=auth['access_token'])
     contact_query = "SELECT Id, HasOptedOutOfEmail FROM Contact WHERE email = '" + email + "'"
     contact_records = sf.query(contact_query)
 

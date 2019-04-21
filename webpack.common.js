@@ -7,7 +7,6 @@ const ManifestRevisionPlugin = require('manifest-revision-webpack-plugin');
 var rootAssetPath = './assets';
 
 module.exports = {
-  mode: 'development',
   entry: {
     app_js: './assets/js/main.js',
     home_js: './assets/js/home.js',
@@ -16,8 +15,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build/public'),
     publicPath: 'http://localhost:2992/assets/',
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[id].[chunkhash].js',
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[id].[contenthash].js',
   },
   resolve: {
     extensions: ['.js', '.css']
@@ -35,10 +34,14 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === 'development',
+            },
           },
           'css-loader',
-          'sass-loader'
+          'sass-loader',
+          'postcss-loader',
         ]
       },
       {
@@ -47,7 +50,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[hash].[ext]'
+              name: '[name].[contenthash].[ext]',
             }
           }
         ]
@@ -66,8 +69,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash].css',
-      chunkFilename: '[id].[chunkhash].css'
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css'
     })
   ]
 };

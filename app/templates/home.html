@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="overlay" class="overlay">
+  <div class="bg"></div>
+  <div class="loader">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </div>
+</div>
+
+<div class="container page-content" id="index">
+  <div class="row">
+    <div class="twelve columns" id="full-content">
+      <h1>Unsubscribe</h1>
+      <form action="{{ url_for('unsubscribe') }}" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        {% if email %}
+
+        <p>
+          <span id="page-text">
+            Are you sure you would like to unsubscribe <strong>{{ email }}</strong> from all Fairway Area 321 emails?
+          </span>
+        </p>
+        {{ form.email(class_="hidden") }}
+
+        {% else %}
+
+        <p class="margin-slim">Please enter your email address:</p>
+        {{ form.email(class_="u-half-width u-text-center") }}
+
+        {% endif %}
+
+        <p>{{ form.submit(class_="button-primary") }}</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    unsubscribe_url = "{{url_for('unsubscribe') }}";
+    trumpet_url = "{{url_for('trumpeter') }}";
+    home_url = "{{url_for('index')}}";
+    $('form').submit(function(e){
+      submitForm(e,unsubscribe_url,trumpet_url,home_url);
+    });
+  });
+</script>
+
+{% endblock %}

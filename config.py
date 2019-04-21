@@ -16,3 +16,5 @@ class Config(object):
     SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN') or ''
     SLACK_BOT_CHANNEL = os.getenv('SLACK_BOT_CHANNEL') or 'unsubscribe'
     SLACK_BOT_USERNAME = os.getenv('SLACK_BOT_USERNAME') or 'trumpeter'
+    WEBPACK_MANIFEST_PATH = os.getenv('WEBPACK_MANIFEST_PATH') or '../build/manifest.json'
+    DEBUG = os.getenv('DEBUG') or False

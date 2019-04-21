@@ -16,14 +16,14 @@
 
     <link href="//fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+    {{ stylesheet_tag('app_css') | safe }}
+    {{ javascript_tag('app_js') | safe }}
+    {% if script_id %}
+    {{ javascript_tag(script_id + '_js') | safe }}
+    {% endif %}
 
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/moment.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ asset_url_for('img/favicon.png') }}">
+
   </head>
   <body>
 
@@ -38,22 +38,14 @@
   {% endwith %}
 
   <div class="icon u-block-center">
-    <img src="{{ url_for('static', filename='img/icon-white.png') }}" width="100%" />
+    <img src="{{ asset_url_for('img/icon-white.png') }}" width="100%" />
   </div>
 
   {% block content %}{% endblock %}
 
   <div class="logo-bottom u-block-center">
-    <img src="{{ url_for('static', filename='img/fairway-black.png') }}" width="100%" />
+    <img src="{{ asset_url_for('img/fairway-black.png') }}" width="100%" />
   </div>
-
-  <script>
-    $(document).ready(function(){
-      if($('#flash').length) {
-        $('#flash').css({opacity: 1});
-      };
-    });
-  </script>
 
   </body>
 </html>

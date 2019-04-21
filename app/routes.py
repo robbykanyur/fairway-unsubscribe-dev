@@ -14,10 +14,11 @@ from requests import Response
 
 @app.route('/')
 def index():
+    script_id = 'home'
     address = request.remote_addr
     email = request.args.get('email')
     form = UnsubscribeForm(email=email, address=address)
-    return render_template('index.html', email=email, form=form, address=address, title="Unsubscribe")
+    return render_template('home.html', script_id=script_id, email=email, form=form, address=address, title="Unsubscribe")
 
 @app.route('/unsubscribe', methods=['POST'])
 def unsubscribe():

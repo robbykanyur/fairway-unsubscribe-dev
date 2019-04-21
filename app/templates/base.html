@@ -22,7 +22,7 @@
     {{ javascript_tag(script_id + '_js') | safe }}
     {% endif %}
 
-    <link rel="icon" type="image/png" href="{{ asset_url_for('img/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset_url_for('main.img/favicon.png') }}">
 
   </head>
   <body>
@@ -38,7 +38,7 @@
   {% endwith %}
 
   <div class="icon u-block-center">
-    <a href="{{ url_for('index') }}">
+    <a href="{{ url_for('main.index') }}">
       <img src="{{ asset_url_for('img/icon-white.png') }}" width="100%" />
     </a>
   </div>

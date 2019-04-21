@@ -1,21 +1,20 @@
-from app import app
-from flask import jsonify
+from flask import jsonify, current_app
 import requests
 from simple_salesforce import Salesforce
 
 def authenticate():
     params = {
         "grant_type": "password",
-        "client_id": app.config['CONSUMER_KEY'],
-        "client_secret": app.config['CONSUMER_SECRET'],
-        "username": app.config['SF_USERNAME'],
-        "password": app.config['SF_PASSWORD'] + app.config['SF_SECURITY_TOKEN']
+        "client_id": current_app.config['CONSUMER_KEY'],
+        "client_secret": current_app.config['CONSUMER_SECRET'],
+        "username": current_app.config['SF_USERNAME'],
+        "password": current_app.config['SF_PASSWORD'] + current_app.config['SF_SECURITY_TOKEN']
     }
 
-    r = requests.post(app.config['SF_OAUTH'], params=params)
+    r = requests.post(current_app.config['SF_OAUTH'], params=params)
 
     access_token = r.json().get("access_token")
-    instance_url = app.config['SF_INSTANCE_URL']
+    instance_url = current_app.config['SF_INSTANCE_URL']
 
     return ({"access_token": access_token, "instance_url": instance_url})
 

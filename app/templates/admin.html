@@ -9,28 +9,30 @@
       <a class="button" href="{{ url_for('logout') }}">Logout</a>&nbsp;
       <a class="button" href="{{ url_for('admin_csv') }}">CSV</a><br><br>
     </div>
-    <table class="u-full-width">
-      <thead>
-        <tr>
-          <th>email</td>
-          <th>address</td>
-          <th>timestamp</td>
-          <th>sf_response</td>
-          <th>previously</td>
-        </tr>
-      </thead>
-      <tbody>
-        {% for record in unsubscribes %}
-        <tr>
-          <td>{{ record.email }}</td>
-          <td>{{ record.address }}</td>
-          <td>{{ momentjs(record.timestamp).format('LLL') }}</td>
-          <td>{{ record.sf_response }}</td>
-          <td>{{ record.previously }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>email</td>
+            <th>address</td>
+            <th>timestamp</td>
+            <th>sf_response</td>
+            <th>previously</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in unsubscribes %}
+          <tr>
+            <td>{{ record.email }}</td>
+            <td>{{ record.address }}</td>
+            <td>{{ momentjs(record.timestamp).format('LLL') }}</td>
+            <td>{{ record.sf_response }}</td>
+            <td>{{ record.previously }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     <div class="row links">
       <div class="four columns">
         {% if prev_url %}

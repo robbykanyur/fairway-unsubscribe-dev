@@ -38,13 +38,17 @@
   {% endwith %}
 
   <div class="icon u-block-center">
-    <img src="{{ asset_url_for('img/icon-white.png') }}" width="100%" />
+    <a href="{{ url_for('index') }}">
+      <img src="{{ asset_url_for('img/icon-white.png') }}" width="100%" />
+    </a>
   </div>
 
   {% block content %}{% endblock %}
 
   <div class="logo-bottom u-block-center">
-    <img src="{{ asset_url_for('img/fairway-black.png') }}" width="100%" />
+    <a href="http://fairwayindependentmc.com" target="_blank" rel="noopener noreferrer">
+      <img src="{{ asset_url_for('img/fairway-black.png') }}" width="100%" />
+    </a>
   </div>
 
   </body>

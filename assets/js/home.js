@@ -1,11 +1,7 @@
-function submitOnEnter(){
-  $('.input').keypress(function(e) {
-    if(e.which == 13) {
-      $('form').submit();
-      return false;
-    };
-  });
-};
+require('expose-loader?$!jquery');
+require('expose-loader?validate!jquery-validation');
+
+window.submitForm = submitForm;
 
 function trumpet(source_text, url){
   var url = url;
@@ -16,10 +12,10 @@ function trumpet(source_text, url){
     data: text,
     contentType: "application/json",
     dataType: 'json'
-  }); 
+  });
 };
 
-function submitForm(e,unsubscribe_url,trumpet_url,home_url){
+function submitForm(unsubscribe_url,trumpet_url,home_url){
   $('#overlay').css({'opacity': 1});
   var unsubscribe_url = unsubscribe_url;
   var trumpet_url = trumpet_url;
@@ -46,12 +42,22 @@ function submitForm(e,unsubscribe_url,trumpet_url,home_url){
       };
       $('#full-content').html('<h1>Error</h1><p>There was an error processing your request. Please try again at a later time.</p><p class="margin-none"><a class="button button-primary" href="' + home_url + '">Try Again</a></p>');
     }
-  });
-  e.preventDefault();
+  })
 };
 
 $(document).ready(function(){
-  submitOnEnter();
-  window.submitForm = submitForm;
+  $('#unsubscribeForm').submit(function(e){
+    e.preventDefault();
+  }).validate({
+    rules: {
+      email: {
+        required: true,
+        email: true
+      }
+    },
+    submitHandler: function(form) {
+      submitForm(unsubscribe_url, trumpet_url, home_url);
+      return false;
+    }
+  });
 });
-

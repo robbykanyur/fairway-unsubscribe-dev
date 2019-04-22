@@ -19,7 +19,12 @@ module.exports = {
     chunkFilename: '[id].[contenthash].js',
   },
   resolve: {
-    extensions: ['.js', '.css']
+    alias: {
+      'jquery': path.resolve(__dirname, './node_modules/jquery/dist/jquery'),
+      'jquery-validation': path.resolve(__dirname, './node_modules/jquery-validation/dist/jquery.validate'),
+      'moment': path.resolve(__dirname, './node_modules/moment/moment')
+    },
+    extensions: ['.js', '.css'],
   },
   module: {
     rules: [
@@ -65,6 +70,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
+      jquery: 'jquery',
       moment: 'moment',
     }),
     new CleanWebpackPlugin(),

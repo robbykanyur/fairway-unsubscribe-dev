@@ -13,7 +13,7 @@
   <div class="row">
     <div class="twelve columns" id="full-content">
       <h1>Unsubscribe</h1>
-      <form action="{{ url_for('main.unsubscribe') }}" method="post" novalidate>
+      <form id="unsubscribeForm" action="{{ url_for('main.unsubscribe') }}" method="post" novalidate>
         {{ form.hidden_tag() }}
 
         {% if email %}
@@ -29,6 +29,7 @@
 
         <p class="margin-slim">Please enter your email address:</p>
         {{ form.email(class_="u-half-width u-text-center") }}
+        <div id="error-placeholder"></div>
 
         {% endif %}
 
@@ -43,9 +44,6 @@
     unsubscribe_url = "{{url_for('main.unsubscribe') }}";
     trumpet_url = "{{url_for('main.trumpeter') }}";
     home_url = "{{url_for('main.index')}}";
-    $('form').submit(function(e){
-      submitForm(e,unsubscribe_url,trumpet_url,home_url);
-    });
   });
 </script>
 

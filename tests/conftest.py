@@ -2,6 +2,7 @@ import os
 import sys
 import pytest
 from app import create_app
+from app.models import User, Unsubscribe
 
 collect_ignore = ['node_modules']
 
@@ -10,6 +11,15 @@ def new_user():
     u = User(username="bobb",email="bobb@example.com")
     u.set_password('bobbbobb')
     return u
+
+@pytest.fixture(scope='module')
+def new_unsubscribe():
+    unsb = Unsubscribe(email='aaa@example.com',
+                       timestamp='datetime.datetime(2019, 4, 14, 9, 44, 25, 391854)',
+                       address='1.1.1.1',
+                       sf_response='200',
+                       previously=False)
+    return unsb
 
 @pytest.fixture(scope='module')
 def test_client():

@@ -10,13 +10,14 @@ module.exports = {
   entry: {
     app_js: './assets/js/main.js',
     home_js: './assets/js/home.js',
+    admin_js: './assets/js/admin.js',
     app_css: './assets/css/main.scss',
   },
   output: {
     path: path.resolve(__dirname, 'build/public'),
     publicPath: 'http://localhost:2992/assets/',
     filename: '[name].[contenthash].js',
-    chunkFilename: '[id].[contenthash].js',
+    chunkFilename: '[name].[contenthash].js',
   },
   resolve: {
     alias: {
@@ -31,9 +32,11 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
       {
         test: /\.scss$/,
@@ -67,11 +70,6 @@ module.exports = {
       rootAssetPath: rootAssetPath,
       ignorePaths: ['/js', '/css'],
       extensionsRegex: /\.(jpe?g|png|gif|svg)$/
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jquery: 'jquery',
-      moment: 'moment',
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({

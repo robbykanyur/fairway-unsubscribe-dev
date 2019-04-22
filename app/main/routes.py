@@ -51,12 +51,13 @@ def trumpeter():
 @bp.route('/admin')
 @login_required
 def admin():
+    script_id = 'admin'
     page = request.args.get('page', 1, type=int)
     unsubscribes = db.session.query(Unsubscribe).order_by(Unsubscribe.timestamp.desc()).paginate(page, 10, False)
     next_url = url_for('main.admin', page=unsubscribes.next_num) if unsubscribes.has_next else None
     prev_url = url_for('main.admin', page=unsubscribes.prev_num) if unsubscribes.has_prev else None
     return render_template('admin.html', unsubscribes=unsubscribes.items, title="Admin", prev_url=prev_url,
-                           next_url=next_url, page=page, total_pages=unsubscribes.pages)
+                           next_url=next_url, page=page, total_pages=unsubscribes.pages, script_id=script_id)
 
 @bp.route('/admin/csv')
 @login_required

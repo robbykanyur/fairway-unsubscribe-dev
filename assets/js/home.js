@@ -1,8 +1,6 @@
 require('expose-loader?$!jquery');
 require('expose-loader?validate!jquery-validation');
 
-window.submitForm = submitForm;
-
 function trumpet(source_text, url){
   var url = url;
   var text = JSON.stringify(source_text);

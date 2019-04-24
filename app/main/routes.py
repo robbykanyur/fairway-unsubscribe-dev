@@ -16,7 +16,10 @@ from app.main import bp
 @bp.route('/')
 def index():
     script_id = 'home'
-    address = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        address = request.headers.getlist("X-Forwarded-For")[0].split(',')[0]
+    else:
+        address = request.remote_addr
     email = request.args.get('email')
     form = UnsubscribeForm(email=email, address=address)
     return render_template('home.html', script_id=script_id, email=email, form=form, address=address, title="Unsubscribe")

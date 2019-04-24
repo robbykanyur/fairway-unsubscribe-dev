@@ -9,6 +9,10 @@ services:
       dockerfile: Dockerfile-web
     depends_on:
       - db
+    volumes:
+      - ./app:/home/unsubscribe/app
+      - ./migrations:/home/unsubscribe/migrations
+      - ./assets:/home/unsubscribe/assets
     expose:
       - 5000
     environment:

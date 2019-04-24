@@ -249,3 +249,5 @@ typings/
 .vscode
 .eslintcache
 package-lock.json
+
+/conf/certbot

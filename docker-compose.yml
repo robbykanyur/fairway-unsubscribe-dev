@@ -7,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-web
+    depends_on:
+      - db
     expose:
       - 5000
     environment:
@@ -35,8 +37,8 @@ services:
       - 2992
     ports:
       - "2992:80"
-    depends_on:
-      - web
+    volumes:
+      - ./conf/assets:/etc/nginx/conf.d
   db:
     image: mysql:5.7
     restart: always
@@ -45,24 +47,27 @@ services:
       MYSQL_USER: unsubscribe
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    depends_on:
-      - web
     expose:
       - "3306"
     volumes:
       - unsubscribe_db:/var/lib/mysql
   proxy:
-    image: unsubscribe-proxy
+    image: nginx:1.15-alpine
     restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile-proxy
-    expose:
-      - "80"
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf/proxy:/etc/nginx/conf.d
+      - ./conf/certbot/conf:/etc/letsencrypt
+      - ./conf/certbot/www:/var/www/certbot
     depends_on:
       - web
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./conf/certbot/conf:/etc/letsencrypt
+      - ./conf/certbot/www:/var/www/certbot
 
 volumes:
   unsubscribe_db:

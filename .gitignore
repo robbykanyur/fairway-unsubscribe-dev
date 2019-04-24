@@ -250,4 +250,7 @@ typings/
 .eslintcache
 package-lock.json
 
-/conf/certbot
+*.pem
+/conf/certbot/conf/accounts
+/conf/certbot/conf/live
+*.swp

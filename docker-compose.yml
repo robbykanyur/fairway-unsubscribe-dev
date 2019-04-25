@@ -3,16 +3,17 @@ version: '2'
 services:
   web:
     restart: always
-    image: unsubscribe-web
+    image: unsubscribe
     build:
       context: .
-      dockerfile: Dockerfile-web
+      dockerfile: Dockerfile
     depends_on:
       - db
     volumes:
       - ./app:/home/unsubscribe/app
       - ./migrations:/home/unsubscribe/migrations
       - ./assets:/home/unsubscribe/assets
+      - ./build:/home/unsubscribe/build
     expose:
       - 5000
     environment:
@@ -31,18 +32,6 @@ services:
       - MYSQL_PASSWORD
       - MYSQL_ROOT_PASSWORD
       - DEBUG
-  assets:
-    restart: always
-    image: unsubscribe-assets
-    build:
-      context: .
-      dockerfile: Dockerfile-assets
-    expose:
-      - 2992
-    ports:
-      - "2992:80"
-    volumes:
-      - ./conf/assets:/etc/nginx/conf.d
   db:
     image: mysql:5.7
     restart: always
@@ -65,6 +54,7 @@ services:
       - ./conf/proxy:/etc/nginx/conf.d
       - ./conf/certbot/conf:/etc/letsencrypt
       - ./conf/certbot/www:/var/www/certbot
+      - ./build/public:/var/www/public
     depends_on:
       - web
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"

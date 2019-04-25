@@ -1,3 +1,0 @@
-FROM nginx:stable
-
-COPY build/public/* /var/www/assets/

@@ -13,7 +13,6 @@ RUN venv/bin/pip install gunicorn pymysql
 
 RUN apk del .build-deps gcc musl-dev libffi-dev openssl-dev
 
-COPY build/manifest.json build/manifest.json
 COPY config.py unsubscribe.py boot.sh ./
 RUN chmod +x boot.sh
 

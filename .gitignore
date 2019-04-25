@@ -254,3 +254,4 @@ package-lock.json
 /conf/certbot/conf/accounts
 /conf/certbot/conf/live
 *.swp
+app.db

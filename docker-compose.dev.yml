@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  web:
+    restart: always
+    image: unsubscribe
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/home/unsubscribe/app
+      - ./migrations:/home/unsubscribe/migrations
+      - ./assets:/home/unsubscribe/assets
+      - ./build:/home/unsubscribe/build
+    expose:
+      - 5000
+    environment:
+      - FLASK_APP
+      - FLASK_ENV
+      - CONSUMER_KEY
+      - CONSUMER_SECRET
+      - SF_USERNAME
+      - SF_PASSWORD
+      - SF_SECURITY_TOKEN
+      - SF_ACCESS_TOKEN
+      - SF_INSTANCE_URL
+      - SLACK_BOT_TOKEN
+      - TEMPLATES_AUTO_RELOAD
+      - DEBUG
+  proxy:
+    image: nginx:1.15-alpine
+    restart: always
+    ports:
+      - "5000:80"
+    volumes:
+      - ./conf/proxy-dev:/etc/nginx/conf.d
+      - ./build/public:/var/www/public
+    depends_on:
+      - web

@@ -9,20 +9,22 @@
         dest: /home/admin/unsubscribe
         update: yes
         version: master
-    - name: build assets and restart containers
+    - name: start building assets
       docker_service:
         project_src: /home/admin/unsubscribe/assets
-      notify:
-        - restart containers
-  handlers:
-    - name: containers down
+      register: output
+    - name: wait for assets to build
+      wait_for:
+        port: 2992
+    - name: docker containers down
       docker_service:
           project_src: /home/admin/unsubscribe
           state: absent
-          listen: "restart containers"
-    - name: containers up
+    - name: docker containers up
       docker_service:
           project_src: /home/admin/unsubscribe
           state: present
-          listen: "restart containers"
+    - name: check web server is responding
+      wait_for:
+        port: 5000
 

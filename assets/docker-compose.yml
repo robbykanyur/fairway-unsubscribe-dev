@@ -1,8 +1,9 @@
 version: '2'
 
 services:
-  assets:
-    image: unsubscribe-assets
+  build:
+    image: unsubscribe-build
+    ports: '2992:2992'
     build:
       context: .
     volumes:

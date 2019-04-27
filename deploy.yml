@@ -9,10 +9,20 @@
         dest: /home/admin/unsubscribe
         update: yes
         version: master
-    - name: build assets
+    - name: build assets and restart containers
       docker_service:
         project_src: /home/admin/unsubscribe/assets
-    - name: update containers
+      notify:
+        - restart containers
+  handlers:
+    - name: containers down
       docker_service:
-        project_src: /home/admin/unsubscribe
-        recreate: always
+          project_src: /home/admin/unsubscribe
+          state: absent
+          listen: "restart containers"
+    - name: containers up
+      docker_service:
+          project_src: /home/admin/unsubscribe
+          state: present
+          listen: "restart containers"
+

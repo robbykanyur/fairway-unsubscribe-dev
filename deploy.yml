@@ -1,0 +1,11 @@
+---
+- hosts: unsubscribe
+  remote_user: admin
+
+  tasks:
+    - name: pull from git
+      git:
+        repo: git@github.com:robertkanyur/fairway-unsubscribe-dev.git
+        dest: /home/admin/unsubscribe
+        update: yes
+        version: master

@@ -9,7 +9,10 @@
         dest: /home/admin/unsubscribe
         update: yes
         version: master
-
     - name: build assets
-      docker_compose:
-        definition: /home/admin/docker-compose.assets.yml
+      docker_service:
+        project_src: /home/admin/unsubscribe
+        files: docker-compose.assets.yml
+    - name: update containers
+      docker_service:
+        project_src: /home/admin/unsubscribe

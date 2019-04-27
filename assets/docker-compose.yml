@@ -3,7 +3,8 @@ version: '2'
 services:
   build:
     image: unsubscribe-build
-    ports: '2992:2992'
+    ports:
+      - "2992:2992"
     build:
       context: .
     volumes:

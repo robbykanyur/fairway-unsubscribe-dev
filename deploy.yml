@@ -16,6 +16,7 @@
     - name: wait for assets to build
       wait_for:
         port: 2992
+        state: stopped
     - name: docker containers down
       docker_service:
           project_src: /home/admin/unsubscribe

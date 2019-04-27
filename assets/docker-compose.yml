@@ -2,11 +2,11 @@ version: '2'
 
 services:
   build:
-    image: unsubscribe-build
+    image: unsubscribe-assets
     ports:
       - "2992:2992"
     build:
-      context: .
+      context: ../
     volumes:
       - ../src:/home/node/src
     entrypoint: ["./assets.sh"]

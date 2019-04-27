@@ -3,19 +3,17 @@ version: '2'
 services:
   web:
     restart: always
-    image: unsubscribe
+    image: unsubscribe-web
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
       - db
     volumes:
-      - ./app:/home/unsubscribe/app
-      - ./migrations:/home/unsubscribe/migrations
-      - ./assets:/home/unsubscribe/assets
-      - ./build:/home/unsubscribe/build
+      - ./src:/home/unsubscribe/src
     expose:
       - 5000
+    entrypoint: ["./boot.sh"]
     environment:
       - FLASK_APP
       - FLASK_ENV

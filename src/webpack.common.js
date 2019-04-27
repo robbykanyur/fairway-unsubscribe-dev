@@ -4,26 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestRevisionPlugin = require('manifest-revision-webpack-plugin');
 
-var rootAssetPath = './assets';
+var rootAssetPath = './src/assets';
 
 module.exports = {
-  entry: {
-    app_js: './assets/js/main.js',
-    home_js: './assets/js/home.js',
-    admin_js: './assets/js/admin.js',
-    app_css: './assets/css/main.scss',
-  },
-  output: {
-    path: path.resolve(__dirname, 'build/public'),
-    publicPath: '/public/',
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].[contenthash].js',
-  },
   resolve: {
     alias: {
-      'jquery': path.resolve(__dirname, './node_modules/jquery/dist/jquery'),
-      'jquery-validation': path.resolve(__dirname, './node_modules/jquery-validation/dist/jquery.validate'),
-      'moment': path.resolve(__dirname, './node_modules/moment/moment')
+      'jquery': path.resolve(__dirname, '../node_modules/jquery/dist/jquery'),
+      'jquery-validation': path.resolve(__dirname, '../node_modules/jquery-validation/dist/jquery.validate'),
+      'moment': path.resolve(__dirname, '../node_modules/moment/moment')
     },
     extensions: ['.js', '.css'],
   },
@@ -44,8 +32,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: process.env.NODE_ENV === 'development',
-            },
+              hmr: process.env.NODE_ENV === 'development'
+            }
           },
           'css-loader',
           'sass-loader',
@@ -66,12 +54,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new ManifestRevisionPlugin(path.join('build', 'manifest.json'), {
+    new CleanWebpackPlugin(),
+    new ManifestRevisionPlugin(path.join('src/build', 'manifest.json'), {
       rootAssetPath: rootAssetPath,
       ignorePaths: ['/js', '/css'],
       extensionsRegex: /\.(jpe?g|png|gif|svg)$/
     }),
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css'

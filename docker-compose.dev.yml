@@ -3,17 +3,19 @@ version: '2'
 services:
   web:
     restart: always
-    image: unsubscribe
+    image: unsubscribe-web
+    depends_on:
+      - assets
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./app:/home/unsubscribe/app
-      - ./migrations:/home/unsubscribe/migrations
-      - ./assets:/home/unsubscribe/assets
-      - ./build:/home/unsubscribe/build
+      - ./src:/home/unsubscribe/src
     expose:
       - 5000
+    ports:
+      - "5000:5000"
+    entrypoint: ["./boot.dev.sh"]
     environment:
       - FLASK_APP
       - FLASK_ENV
@@ -27,13 +29,16 @@ services:
       - SLACK_BOT_TOKEN
       - TEMPLATES_AUTO_RELOAD
       - DEBUG
-  proxy:
-    image: nginx:1.15-alpine
+  assets:
     restart: always
-    ports:
-      - "5000:80"
+    image: unsubscribe-assets
+    build:
+      context: .
+      dockerfile: Dockerfile-assets
     volumes:
-      - ./conf/proxy-dev:/etc/nginx/conf.d
-      - ./build/public:/var/www/public
-    depends_on:
-      - web
+      - ./src:/home/node/src
+    expose:
+      - 2992
+    ports:
+      - "2992:2992"
+    entrypoint: ["./assets.dev.sh"]

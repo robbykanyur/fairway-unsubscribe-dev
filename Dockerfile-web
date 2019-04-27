@@ -1,5 +1,4 @@
 FROM python:3.6-alpine
-
 RUN adduser -D unsubscribe
 
 WORKDIR /home/unsubscribe
@@ -13,12 +12,8 @@ RUN venv/bin/pip install gunicorn pymysql
 
 RUN apk del .build-deps gcc musl-dev libffi-dev openssl-dev
 
-COPY config.py unsubscribe.py boot.sh ./
-RUN chmod +x boot.sh
-
-ENV FLASK_APP unsubscribe.py
+COPY boot.sh boot.dev.sh ./
+RUN chmod +x boot*
 
 RUN chown -R unsubscribe:unsubscribe ./
 USER unsubscribe
-
-ENTRYPOINT ["./boot.sh"]

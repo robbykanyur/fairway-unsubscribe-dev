@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "an unsubscribe tool for salesforce",
   "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --progress --colors --port 2992 --content-base build/public",
-    "build": "node_modules/.bin/webpack --config webpack.prod.js --progress --colors"
+    "start": "node_modules/.bin/webpack-dev-server --config src/webpack.dev.js --progress --colors",
+    "build": "node_modules/.bin/webpack --config src/webpack.prod.js --progress --colors",
+    "manifest": "node_modules/.bin/webpack --config src/webpack.dev.js --progress --colors"
   },
   "repository": {
     "type": "git",

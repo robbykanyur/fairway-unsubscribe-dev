@@ -11,8 +11,7 @@
         version: master
     - name: build assets
       docker_service:
-        project_src: /home/admin/unsubscribe
-        files: docker-compose.assets.yml
+        project_src: /home/admin/unsubscribe/assets
     - name: update containers
       docker_service:
         project_src: /home/admin/unsubscribe

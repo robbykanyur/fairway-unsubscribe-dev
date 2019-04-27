@@ -8,7 +8,6 @@ services:
       - assets
     build:
       context: .
-      dockerfile: Dockerfile
     volumes:
       - ./src:/home/unsubscribe/src
     expose:

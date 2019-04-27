@@ -6,7 +6,6 @@ services:
     image: unsubscribe-web
     build:
       context: .
-      dockerfile: Dockerfile-web
     depends_on:
       - db
     volumes:

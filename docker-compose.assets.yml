@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  assets:
+    image: unsubscribe-assets
+    build:
+      context: .
+      dockerfile: Dockerfile-assets
+    volumes:
+      - ./src:/home/node/src
+    entrypoint: ["./assets.sh"]
+

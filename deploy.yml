@@ -15,3 +15,4 @@
     - name: update containers
       docker_service:
         project_src: /home/admin/unsubscribe
+        restarted: yes

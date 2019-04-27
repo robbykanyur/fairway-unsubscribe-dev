@@ -16,4 +16,3 @@
       docker_service:
         project_src: /home/admin/unsubscribe
         recreate: always
-        restarted: yes

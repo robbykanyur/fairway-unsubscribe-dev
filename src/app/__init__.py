@@ -1,5 +1,6 @@
 import os
 import base64
+import logging
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -21,7 +22,7 @@ SENTRY_DSN = base64.b64decode(os.getenv('SENTRY_DSN')).decode('utf-8')
 if (FLASK_ENV == 'production'):
     sentry_sdk.init(
        dsn=SENTRY_DSN,
-       integrations=[FlaskIntegration()]
+       integrations=[FlaskIntegration()],
     )
 
 def create_app(config_class=Config):
@@ -35,8 +36,12 @@ def create_app(config_class=Config):
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
-
     app.jinja_env.globals['momentjs'] = momentjs
+
+    if __name__ != '__main__':
+        gunicorn_logger = logging.getLogger('gunicorn.error')
+        app.logger.handlers = gunicorn_logger.handlers
+        app.logger.setLevel(gunicorn_logger.level)    
 
     return app
 

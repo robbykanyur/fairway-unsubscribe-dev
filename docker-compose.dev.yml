@@ -28,6 +28,7 @@ services:
       - SLACK_BOT_TOKEN
       - TEMPLATES_AUTO_RELOAD
       - DEBUG
+      - SENTRY_DSN
   assets:
     restart: always
     image: unsubscribe-assets

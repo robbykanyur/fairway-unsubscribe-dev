@@ -9,6 +9,14 @@
         dest: /home/admin/unsubscribe
         update: yes
         version: master
+    - name: rebuild unsubscribe-web image if necessary
+      docker_image:
+        path: /home/admin/unsubscribe
+        tag: unsubscribe-web
+    - name: rebuild unsubscribe-assets image if necessary
+      docker_image:
+        path: /home/admin/unsubscribe/assets
+        tag: unsubscribe-assets
     - name: start building assets
       docker_service:
         project_src: /home/admin/unsubscribe/assets

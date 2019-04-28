@@ -31,6 +31,7 @@ services:
       - MYSQL_PASSWORD
       - MYSQL_ROOT_PASSWORD
       - DEBUG
+      - SENTRY_DSN
   db:
     image: mysql:5.7
     restart: always

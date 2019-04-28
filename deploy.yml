@@ -11,12 +11,12 @@
         version: master
     - name: rebuild unsubscribe-web image if necessary
       docker_image:
+        name: unsubscribe-assets
         path: /home/admin/unsubscribe
-        tag: unsubscribe-web
     - name: rebuild unsubscribe-assets image if necessary
       docker_image:
+        name: unsubscribe-assets
         path: /home/admin/unsubscribe/assets
-        tag: unsubscribe-assets
     - name: start building assets
       docker_service:
         project_src: /home/admin/unsubscribe/assets

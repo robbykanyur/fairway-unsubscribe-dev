@@ -33,7 +33,7 @@ services:
     image: unsubscribe-assets
     build:
       context: .
-      dockerfile: Dockerfile-assets
+      dockerfile: assets/Dockerfile
     volumes:
       - ./src:/home/node/src
     expose:

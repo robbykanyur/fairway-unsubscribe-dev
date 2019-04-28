@@ -11,15 +11,16 @@ from flask_webpack import Webpack
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
+FLASK_ENV = os.getenv('FLASK_ENV')
+
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 webpack = Webpack()
 login.login_view = 'main.login'
 
-FLASK_ENV = os.getenv('FLASK_ENV')
-SENTRY_DSN = base64.b64decode(os.getenv('SENTRY_DSN')).decode('utf-8')
 if (FLASK_ENV == 'production'):
+    SENTRY_DSN = base64.b64decode(os.getenv('SENTRY_DSN')).decode('utf-8')
     sentry_sdk.init(
        dsn=SENTRY_DSN,
        integrations=[FlaskIntegration()],

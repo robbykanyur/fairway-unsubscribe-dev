@@ -33,8 +33,7 @@ services:
     restart: always
     image: unsubscribe-assets
     build:
-      context: .
-      dockerfile: assets/Dockerfile
+      context: assets/
     volumes:
       - ./src:/home/node/src
     expose:

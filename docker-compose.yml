@@ -4,6 +4,8 @@ services:
   web:
     restart: always
     image: unsubscribe-web
+    networks:
+      - proxy_default
     build:
       context: .
     depends_on:
@@ -34,6 +36,8 @@ services:
       - SENTRY_DSN
   db:
     image: mysql:5.7
+    networks:
+      - proxy_default
     restart: always
     environment:
       MYSQL_DATABASE: unsubscribe
@@ -44,27 +48,11 @@ services:
       - "3306"
     volumes:
       - unsubscribe_db:/var/lib/mysql
-  proxy:
-    image: nginx:1.15-alpine
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./conf/proxy:/etc/nginx/conf.d
-      - ./conf/certbot/conf:/etc/letsencrypt
-      - ./conf/certbot/www:/var/www/certbot
-      - ./src/build/public:/var/www/public
-    depends_on:
-      - web
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./conf/certbot/conf:/etc/letsencrypt
-      - ./conf/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-  
+
 volumes:
   unsubscribe_db:
+    external: true
+
+networks:
+  proxy_default:
     external: true

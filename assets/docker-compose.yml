@@ -7,6 +7,7 @@ services:
       - "2992:2992"
     build:
       context: ../
+      dockerfile: assets/Dockerfile
     volumes:
       - ../src:/home/node/src
     entrypoint: ["./assets.sh"]

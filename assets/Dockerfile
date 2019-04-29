@@ -6,5 +6,5 @@ RUN apk add --no-cache --virtual .build-deps gcc g++ make autoconf automake libt
 RUN cd /home/node && npm install
 RUN apk del .build-deps gcc g++ make autoconf automake libtool nasm build-base zlib-dev
 
-COPY assets/assets.sh assets/assets.dev.sh ./
+COPY assets.sh assets.dev.sh ./
 RUN chmod +x ./assets*

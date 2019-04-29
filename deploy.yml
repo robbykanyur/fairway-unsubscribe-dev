@@ -11,7 +11,7 @@
         version: master
     - name: rebuild unsubscribe-web image if necessary
       docker_image:
-        name: unsubscribe-assets
+        name: unsubscribe-web
         path: /home/admin/unsubscribe
     - name: rebuild unsubscribe-assets image if necessary
       docker_image:

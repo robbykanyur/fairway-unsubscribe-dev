@@ -1,3 +1,5 @@
 # fairway-unsubscribe-dev
 
-an unsubscribe tool for salesforce
+An unsubscribe tool for salesforce.
+
+![](demo/fairway-unsubscribe.gif)

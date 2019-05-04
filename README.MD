@@ -2,4 +2,4 @@
 
 An unsubscribe tool for salesforce.
 
-![](demo/fairway-unsubscribe.gif)
+![](demo/demo-fairway-unsubscribe.gif)
